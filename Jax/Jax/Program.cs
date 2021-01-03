@@ -113,26 +113,29 @@ namespace Jax
 
         private static void OnAfterAttack(object sender, AfterAttackEventArgs args)
         {
-            var target = TargetSelector.GetTarget(1100);
-
-            if (!args.Target.IsEnemy || !args.Target.IsValidTarget())
+            if (args.Target == null || !args.Target.IsValidTarget())
             {
                 return;
             }
-            
+
             if (Orbwalker.ActiveMode == OrbwalkerMode.Combo && args.Target is AIHeroClient &&
-                Config["csettings"].GetValue<MenuBool>("usew").Enabled && target != null && args.Target.Equals(target))
+                Config["csettings"].GetValue<MenuBool>("usew").Enabled)
             {
                 if (W.Cast() || castHydra(args.Target))
+                {
                     Orbwalker.ResetAutoAttackTimer();
+                }
             }
-            if (Orbwalker.ActiveMode == OrbwalkerMode.LaneClear && !(args.Target is AIHeroClient) &&
-                Config["Lcsettings"].GetValue<MenuBool>("usewLC").Enabled &&
-                GameObjects.AttackableUnits.Where(x => x.IsValidTarget(ObjectManager.Player.GetRealAutoAttackRange()) && x.IsEnemy)
-                    .Count(m => m.Health > ObjectManager.Player.GetAutoAttackDamage((AIBaseClient)args.Target)) > 0)
+
+            if (Orbwalker.ActiveMode == OrbwalkerMode.LaneClear && args.Target is AIMinionClient &&
+                Config["Lcsettings"].GetValue<MenuBool>("usewLC").Enabled && GameObjects.AttackableUnits.Where(x =>
+                        x.IsValidTarget(ObjectManager.Player.GetRealAutoAttackRange()) && x.IsEnemy)
+                    .Any(m => m.Health > ObjectManager.Player.GetAutoAttackDamage((AIBaseClient) args.Target)))
             {
                 if (W.Cast() || castHydra(args.Target))
+                {
                     Orbwalker.ResetAutoAttackTimer();
+                }
             }
         }
         
@@ -196,11 +199,13 @@ namespace Jax
         
         private static void WardJump()
         {
-            Orbwalker.Move(Game.CursorPos);
+            ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, Game.CursorPos);
+            
             if (!Q.IsReady())
             {
                 return;
             }
+            
             var wardSlot = ObjectManager.Player.GetWardSlot();
             var pos = Game.CursorPos;
             if (pos.Distance(ObjectManager.Player.Position) > 600)
@@ -216,8 +221,7 @@ namespace Jax
             else
             {
                 if (wardSlot != null && ObjectManager.Player.CanUseItem((int)wardSlot.Slot) &&
-                    (ObjectManager.Player.Spellbook.CanUseSpell(wardSlot.SpellSlot) == SpellState.Ready || wardSlot.CountInSlot != 0) &&
-                    !justWJ)
+                    (ObjectManager.Player.Spellbook.CanUseSpell(wardSlot.SpellSlot) == SpellState.Ready && !justWJ))
                 {
                     justWJ = true;
                     DelayAction.Add(new Random().Next(1000, 1500), () => { justWJ = false; });
