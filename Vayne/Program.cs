@@ -22,6 +22,7 @@ namespace PRADA_Vayne
         public static Menu ComboMenu;
         public static Menu LaneClearMenu;
         public static Menu EscapeMenu;
+        public static Menu GapcloserMenu;
         public static Menu DrawingsMenu;
         public static Menu SkinhackMenu;
         public static Menu OrbwalkerMenu;
