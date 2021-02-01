@@ -365,7 +365,7 @@ namespace Jax
             if (Q.IsReady() && Config["Lcsettings"].GetValue<MenuBool>("useqLC").Enabled)
             {
                 var minions =
-                    GameObjects.Enemy.Where(m => (m.IsMinion() || m.IsJungle()) && Q.CanCast(m) && (Q.GetDamage(m) > m.Health || m.Health > ObjectManager.Player.GetAutoAttackDamage(m) * 5))
+                    GameObjects.EnemyMinions.Where(m => (m.IsMinion() || m.IsJungle()) && Q.CanCast(m) && (Q.GetDamage(m) > m.Health || m.Health > ObjectManager.Player.GetAutoAttackDamage(m) * 5))
                         .OrderByDescending(m => Q.GetDamage(m) > m.Health)
                         .ThenBy(m => m.DistanceToPlayer());
                 foreach (var mini in minions)

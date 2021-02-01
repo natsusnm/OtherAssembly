@@ -354,7 +354,7 @@ namespace Zed
             var useEl = _config["Farm"]["LaneFarm"].GetValue<MenuBool>("UseEL").Enabled;
             if (_q.IsReady() && useQl && mymana)
             {
-                var fl2 = _q.GetLineFarmLocation(allMinionsQ, _q.Width);
+                var fl2 = _q.GetLineFarmLocation(allMinionsQ.ToList(), _q.Width);
                 if (fl2.MinionsHit >= 3) _q.Cast(fl2.Position);
                 else
                     foreach (var minion in allMinionsQ)

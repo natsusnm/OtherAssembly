@@ -292,7 +292,7 @@ namespace KogMaw
                 else if (Orbwalker.ActiveMode == OrbwalkerMode.LaneClear && ObjectManager.Player.ManaPercent > Config["Farm"].GetValue<MenuSlider>("Mana").Value && Config["Farm"].GetValue<MenuBool>("farmE").Enabled && ObjectManager.Player.Mana > RMANA + EMANA)
                 {
                     var minionList = GameObjects.GetMinions(ObjectManager.Player.Position, E.Range);
-                    var farmPosition = E.GetLineFarmLocation(minionList, E.Width);
+                    var farmPosition = E.GetLineFarmLocation(minionList.ToList(), E.Width);
 
                     if (farmPosition.MinionsHit >= Config["Farm"].GetValue<MenuSlider>("LCminions").Value)
                         E.Cast(farmPosition.Position);

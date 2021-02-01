@@ -717,7 +717,7 @@ namespace Olaf
                                      let iMinions = allMinions
                                      where
                                          item.Value.Item.IsReady
-                                         && iMinions[0].Distance(Player.Position) < item.Value.Item.Range
+                                         && iMinions.FirstOrDefault().Distance(Player.Position) < item.Value.Item.Range
                                      select item)
                 {
                     item.Value.Item.Cast();
@@ -749,7 +749,7 @@ namespace Olaf
 
                 if (qMinions.Count > 0)
                 {
-                    var locQ = Q.GetLineFarmLocation(qMinions, Q.Width);
+                    var locQ = Q.GetLineFarmLocation(qMinions.ToList(), Q.Width);
 
                     if (qMinions.Count == qMinions.Count(m => Player.Distance(m) < Q.Range)
                         && locQ.MinionsHit >= vParamQMinionCount && locQ.Position.IsValid())
@@ -770,15 +770,15 @@ namespace Olaf
                     {
                         case 0:
                             {
-                                if (eMinions[0].Health <= E.GetDamage(eMinions[0]))
+                                if (eMinions.FirstOrDefault().Health <= E.GetDamage(eMinions.FirstOrDefault()))
                                 {
-                                    E.CastOnUnit(eMinions[0]);
+                                    E.CastOnUnit(eMinions.FirstOrDefault());
                                 }
                                 break;
                             }
                         case 1:
                             {
-                                E.CastOnUnit(eMinions[0]);
+                                E.CastOnUnit(eMinions.FirstOrDefault());
                                 break;
                             }
                     }

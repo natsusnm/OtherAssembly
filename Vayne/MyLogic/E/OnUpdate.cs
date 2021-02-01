@@ -19,7 +19,7 @@ namespace PRADA_Vayne.MyLogic.E
                             for (var i = 40; i < 425; i += 125)
                             {
                                 var flags = NavMesh.GetCollisionFlags(hero.Position.ToVector2().Extend(Heroes.Player.Position.ToVector2(), -i).ToVector3());
-                                if (flags != null && flags.HasFlag(CollisionFlags.Wall) || flags.HasFlag(CollisionFlags.Building))
+                                if (flags.HasFlag(CollisionFlags.Wall) || flags.HasFlag(CollisionFlags.Building))
                                 {
                                     Program.E.Cast(hero);
                                     return;

@@ -589,7 +589,7 @@ namespace Viktor
             
             if (!jungle)
             {
-                allminions = GameObjects.GetMinions(maxRangeE);
+                allminions = GameObjects.GetMinions(maxRangeE).ToList();
             }
             else
             {
