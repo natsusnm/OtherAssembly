@@ -38,7 +38,7 @@ namespace KogMaw
 
             Q.SetSkillshot(0.25f, 80f, 1650f, true, SpellType.Line);
             E.SetSkillshot(0.25f, 120f, 1400f, false, SpellType.Line);
-            R.SetSkillshot(0.85f, 120f, float.MaxValue, false, SpellType.Circle);
+            R.SetSkillshot(1.15f, 120f, float.MaxValue, false, SpellType.Circle);
 
             Config = new Menu("Kogmaw", "[Sebby]: Kog'Maw", true);
             var QConfig = new Menu("QConfig", "Q Settings");
