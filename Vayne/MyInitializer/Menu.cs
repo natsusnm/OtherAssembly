@@ -20,7 +20,10 @@ namespace PRADA_Vayne.MyInitializer
 
         public static void ConstructMenu()
         {
-            Program.MainMenu = new Menu("PRADA Vayne", "pradamenu", true);
+            Program.MainMenu = new Menu("PRADA Vayne", "pradamenu", true).Attach();
+            Program.GapcloserMenu = AntiGapcloser.Attach(Program.MainMenu, true);
+            Program.GapcloserMenu.Add(new MenuBool("QAntiGapcloser", "Use Q"));
+            Program.GapcloserMenu.Add(new MenuBool("EAntiGapcloser", "Use E"));
             Program.ComboMenu = new Menu("Combo Settings", "combomenu");
             Program.LaneClearMenu =
                 new Menu("Laneclear Settings", "laneclearmenu");
@@ -60,9 +63,6 @@ namespace PRADA_Vayne.MyInitializer
             Program.ComboMenu.Add(new MenuBool("RCombo", "Auto Ult", false));
             Program.EscapeMenu.Add(new MenuBool("QUlt", "Smart Q-Ult"));
             Program.EscapeMenu.Add(new MenuBool("EInterrupt", "Use E to Interrupt"));
-            Program.GapcloserMenu = AntiGapcloser.Attach(Program.MainMenu, true);
-            Program.GapcloserMenu.Add(new MenuBool("QAntiGapcloser", "Use Q"));
-            Program.GapcloserMenu.Add(new MenuBool("EAntiGapcloser", "Use E"));
             Program.LaneClearMenu.Add(new MenuBool("QLastHit", "Use Q to Lasthit"));
             Program.LaneClearMenu.Add(
                 new MenuSlider("QLastHitMana", "Min Mana% for Q Lasthit", 45));
@@ -80,14 +80,13 @@ namespace PRADA_Vayne.MyInitializer
 
         public static void FinishMenuInit()
         {
+            Program.MainMenu.Add(Program.GapcloserMenu);
             Program.MainMenu.Add(Program.ComboMenu);
             Program.MainMenu.Add(Program.LaneClearMenu);
             Program.MainMenu.Add(Program.EscapeMenu);
-            Program.MainMenu.Add(Program.GapcloserMenu);
             Program.MainMenu.Add(Program.SkinhackMenu); // XD
             Program.MainMenu.Add(Program.DrawingsMenu);
             Program.MainMenu.Add(Program.OrbwalkerMenu);
-            Program.MainMenu.Attach();
         }
     }
 }
